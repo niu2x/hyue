@@ -20,8 +20,10 @@ set_target_properties(DrawingMoonRT PROPERTIES
     POSITION_INDEPENDENT_CODE ON
 )
 
+file(GLOB_RECURSE cpp_src src/*.cpp)
+
 target_sources(DrawingMoonRT PRIVATE
-    src/DrawingMoon.cpp
+    ${cpp_src}
 )
 
 target_include_directories(DrawingMoonRT PUBLIC

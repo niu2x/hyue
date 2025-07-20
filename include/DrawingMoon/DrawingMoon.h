@@ -6,26 +6,20 @@ namespace DrawingMoon {
 
 enum class GraphicAPI {
     OpenGL,
-    OpenMetal,
-    OpenVulkan,
+    Metal,
+    Vulkan,
 };
 
-enum class WindowSystem {
+enum class WindowSystemType {
     GLFW3,
-    QT5,
+    Qt5,
 };
 
-class DRAWING_MOON_API Root {
-public:
-    Root();
-    ~Root();
+struct InitParam {
+    GraphicAPI graphic_api;
+    WindowSystemType window_system_type;
 };
 
-// class DRAWING_MOON_API GraphicAPIContext {
-// public:
-//     GraphicAPIContext();
-//     virtual ~GraphicAPIContext();
-//     virtual void make_current() = 0;
-// };
-
+DRAWING_MOON_API bool init(const InitParam& param);
+DRAWING_MOON_API int run();
 }
