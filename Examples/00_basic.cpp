@@ -2,13 +2,15 @@
 #include <stdlib.h>
 
 int main() {
-    DrawingMoon::InitParam init_param;
+    DrawingMoon::init();
 
-    init_param.window_system_type = DrawingMoon::WindowSystemType::Qt5;
-    init_param.graphic_api = DrawingMoon::GraphicAPI::OpenGL;
+    while (!DrawingMoon::should_exit()) {
+        DrawingMoon::clear();
+        DrawingMoon::swap_buffers();
 
-    if (DrawingMoon::init(init_param)) {
-        return DrawingMoon::run();
+        DrawingMoon::poll_events();
     }
+
+    DrawingMoon::shutdown();
     return EXIT_FAILURE;
 }

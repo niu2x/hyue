@@ -7,8 +7,8 @@ project(DrawingMoon VERSION 0.0.1 LANGUAGES CXX C)
 add_library(DrawingMoonRT SHARED "")
 
 generate_export_header(DrawingMoonRT
-    BASE_NAME           DRAWING_MOON
-    EXPORT_MACRO_NAME   DRAWING_MOON_API
+    BASE_NAME           DRAW_MOON
+    EXPORT_MACRO_NAME   DRAW_MOON_API
     EXPORT_FILE_NAME    include/DrawingMoon/api.h
 )
 
@@ -29,6 +29,13 @@ target_sources(DrawingMoonRT PRIVATE
 target_include_directories(DrawingMoonRT PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/include
     include/
+)
+
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+target_link_libraries(DrawingMoonRT PUBLIC
+    glfw
+    OpenGL::GL
 )
 
 # Install DrawingMoonRT
