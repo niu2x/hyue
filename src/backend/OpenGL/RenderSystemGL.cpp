@@ -19,4 +19,8 @@ bool RenderSystemGL::query_renderer_details(
     return true;
 }
 
+void RenderSystemGL::create_gl_context_once() {
+    
+}
+
 }

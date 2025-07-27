@@ -25,6 +25,7 @@ set_target_properties(hyue PROPERTIES
 file(GLOB cpp_src 
     src/*.cpp
     src/backend/OpenGL/*.cpp
+    src/backend/OpenGL/platform/Linux/*.cpp
     src/backend/Dummy/*.cpp
 )
 

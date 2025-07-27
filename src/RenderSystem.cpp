@@ -45,7 +45,9 @@ RenderSystem::~RenderSystem() {
 
 const RendererInfo& RenderSystem::get_renderer_info() {
     if(! pimpl_->has_info) {
-        pimpl_->has_info = query_renderer_details(&pimpl_->info, nullptr);
+        if(query_renderer_details(&pimpl_->info, nullptr)){
+            pimpl_->has_info = true;
+        }
     }
     return pimpl_->info;
 }
