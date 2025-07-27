@@ -1,16 +1,9 @@
-#include <DrawingMoon/DrawingMoon.h>
+#include <hyue/RenderSystem.h>
+#include <hyue/RendererInfo.h>
 #include <stdlib.h>
 
 int main() {
-    DrawingMoon::init();
-
-    while (!DrawingMoon::should_exit()) {
-        DrawingMoon::clear();
-        DrawingMoon::swap_buffers();
-
-        DrawingMoon::poll_events();
-    }
-
-    DrawingMoon::shutdown();
+    auto renderer = hyue::RenderSystem::load("OpenGL");
+    auto renderer_info = renderer->get_renderer_info();
     return EXIT_FAILURE;
 }

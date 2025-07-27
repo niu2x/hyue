@@ -2,17 +2,19 @@ cmake_minimum_required(VERSION 3.13.0 FATAL_ERROR)
 
 include(GenerateExportHeader)
 
-project(DrawingMoon VERSION 0.0.1 LANGUAGES CXX C)
+project(hyue VERSION 0.0.1 LANGUAGES CXX C)
 
-add_library(DrawingMoonRT SHARED "")
+option(HYUE_STATIC "build static lib" OFF)
 
-generate_export_header(DrawingMoonRT
-    BASE_NAME           DRAW_MOON
-    EXPORT_MACRO_NAME   DRAW_MOON_API
-    EXPORT_FILE_NAME    include/DrawingMoon/api.h
-)
+if(HYUE_STATIC)
+    add_library(hyue STATIC "")
+    target_compile_definitions(hyue PUBLIC HYUE_STATIC_DEFINE)
+else()
+    add_library(hyue SHARED "")
+    target_compile_definitions(hyue PRIVATE HYUE_EXPORTS)
+endif()
 
-set_target_properties(DrawingMoonRT PROPERTIES 
+set_target_properties(hyue PROPERTIES 
     CXX_STANDARD 17
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden
@@ -20,28 +22,29 @@ set_target_properties(DrawingMoonRT PROPERTIES
     POSITION_INDEPENDENT_CODE ON
 )
 
-file(GLOB_RECURSE cpp_src src/*.cpp)
+file(GLOB cpp_src 
+    src/*.cpp
+    src/backend/OpenGL/*.cpp
+    src/backend/Dummy/*.cpp
+)
 
-target_sources(DrawingMoonRT PRIVATE
+target_compile_definitions(hyue PRIVATE USE_OPENGL)
+
+target_sources(hyue PRIVATE
     ${cpp_src}
 )
 
-target_include_directories(DrawingMoonRT PUBLIC
-    ${CMAKE_CURRENT_BINARY_DIR}/include
+target_include_directories(hyue PUBLIC
     include/
 )
 
 find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
-target_link_libraries(DrawingMoonRT PUBLIC
-    glfw
+target_link_libraries(hyue PUBLIC
     OpenGL::GL
 )
 
-# Install DrawingMoonRT
-install(TARGETS DrawingMoonRT DESTINATION lib)
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/DrawingMoon DESTINATION include)
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/DrawingMoon DESTINATION include)
-
+# Install hyue
+install(TARGETS hyue DESTINATION lib)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/hyue DESTINATION include)
 
 add_subdirectory(Examples)
